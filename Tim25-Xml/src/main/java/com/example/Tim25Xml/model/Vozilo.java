@@ -4,14 +4,22 @@ package com.example.Tim25Xml.model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Vozilo {
+public class Vozilo  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "ZauzetoOd", nullable = false)
+    private LocalDate zauzetoOd;
+
+    @Column(name = "ZauzetoDo", nullable = false)
+    private LocalDate zauzetoDo;
+
 
     @Column(name = "Mesto", nullable = false)
     private String mesto;
@@ -46,10 +54,15 @@ public class Vozilo {
     @Column(name = "BrojSedistaZaDecu", nullable = false)
     private int brojSedistaZaDecu;
 
+    @Column(name = "BrojKomentara", nullable = false)
+    private int brojKomentara;
+
     public Vozilo() {
     }
 
-    public Vozilo(String mesto, String markaAutomobila, String modelAutomobila, String menjac, String gorivo, String klasaAutomobila, double cena, double predjenaKilometraza, String planiranoZaPreci, boolean cwd, int brojSedistaZaDecu) {
+    public Vozilo(LocalDate zauzetoOd,LocalDate zauzetoDo,String mesto, String markaAutomobila, String modelAutomobila, String menjac, String gorivo, String klasaAutomobila, double cena, double predjenaKilometraza, String planiranoZaPreci, boolean cwd, int brojSedistaZaDecu) {
+        this.zauzetoOd=zauzetoOd;
+        this.zauzetoDo=zauzetoDo;
         this.mesto = mesto;
         this.markaAutomobila = markaAutomobila;
         this.modelAutomobila = modelAutomobila;
@@ -61,6 +74,7 @@ public class Vozilo {
         this.planiranoZaPreci = planiranoZaPreci;
         this.cwd = cwd;
         this.brojSedistaZaDecu = brojSedistaZaDecu;
+        this.brojKomentara=0;
     }
 
     public Long getId() {
@@ -155,10 +169,37 @@ public class Vozilo {
         this.brojSedistaZaDecu = brojSedistaZaDecu;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public int getBrojKomentara() {
+        return brojKomentara;
+    }
 
+    public void setBrojKomentara(int brojKomentara) {
+        this.brojKomentara = brojKomentara;
+    }
+
+    public LocalDate getZauzetoOd() {
+        return zauzetoOd;
+    }
+
+    public void setZauzetoOd(LocalDate zauzetoOd) {
+        this.zauzetoOd = zauzetoOd;
+    }
+
+    public LocalDate getZauzetoDo() {
+        return zauzetoDo;
+    }
+
+    public void setZauzetoDo(LocalDate zauzetoDo) {
+        this.zauzetoDo = zauzetoDo;
+    }
 
     public void copyValues(Vozilo vozilo) {
+        this.zauzetoOd=vozilo.getZauzetoOd();
+        this.zauzetoDo=vozilo.getZauzetoDo();
         this.mesto = vozilo.getMesto();
         this.markaAutomobila = vozilo.getMarkaAutomobila();
         this.modelAutomobila = vozilo.getModelAutomobila();
@@ -170,6 +211,8 @@ public class Vozilo {
         this.brojSedistaZaDecu=vozilo.getBrojSedistaZaDecu();
         this.predjenaKilometraza=vozilo.getPredjenaKilometraza();
         this.planiranoZaPreci=vozilo.getPlaniranoZaPreci();
+        this.brojKomentara=vozilo.getBrojKomentara();
 
     }
+
 }
