@@ -4,10 +4,11 @@ package com.example.Tim25Xml.controler;
 import com.example.Tim25Xml.model.Komentar;
 import com.example.Tim25Xml.model.Slika;
 import com.example.Tim25Xml.model.Vozilo;
-import com.example.Tim25Xml.service.KomentarService;
-import com.example.Tim25Xml.service.SlikaService;
-import com.example.Tim25Xml.service.VoziloService;
-import com.example.Tim25Xml.service.VoziloServiceImpl;
+import com.example.Tim25Xml.model.ZauzeceVozila;
+import com.example.Tim25Xml.model.dto.SlikaDTO;
+import com.example.Tim25Xml.repository.SlikaRepository;
+import com.example.Tim25Xml.service.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.print.Collation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,6 +42,12 @@ public class VoziloControler {
     private VoziloService voziloService;
     @Autowired
     private KomentarService komentarService;
+
+    @Autowired
+    private SlikaRepository slikaRepository;
+
+    @Autowired
+    private ZauzeceVozilaService zauzeceVozilaService;
 
    /* @Autowired
     private SlikaService slikaService;*/
@@ -62,25 +70,21 @@ public class VoziloControler {
         return new ResponseEntity<Vozilo>(vozilo1, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = POST, value = "/dodajSliku")
-    @ResponseBody
-    public void dodajSluku(@RequestBody Slika product) throws Exception {
-        String folder="/slike/"+product.getIdVozila();
+    @PostMapping(value = "/slika")
+    public ResponseEntity<Slika> dodajSluku(@RequestBody SlikaDTO slikaDTO) throws Exception {
 
-        ArrayList<File> files = product.getImages();
-        for (File file:files) {
-            String fileName = file.getAbsolutePath();
-            BufferedImage image = ImageIO.read(file);
-            ImageIO.write(image, "jpg", new File(folder));
-          /*  byte[] bytes = file.getBytes();
-            Path path= Paths.get(folder+file.getOriginalFilename()+product.getIdVozila());
-            Files.write(path, bytes);*/
-            // ImageModel blueImage = new ImageModel(2, "JSA-ABOUT-IMAGE-BLUE-BACKGROUND", "png", arrayPic);
-            //Slika img = new Slika(idVozila, compressBytes(file.getBytes()));
+       /* String split[]=slikaDTO.getPutanja().split(",");
+        slikaDTO.setPutanja(split[1]);*/
 
-        }
+        byte[] imageByte;
+        Base64.Decoder decoder=Base64.getDecoder();
+        imageByte=decoder.decode(slikaDTO.getPutanja());
 
-        //slikaService.create(voziloId,files);
+        Slika slika=new Slika();
+        slika.setPicByte(imageByte);
+        slika.setIdVozila(slikaDTO.getId());
+        slikaRepository.save(slika);
+        return new ResponseEntity<>(slika,HttpStatus.CREATED);
 
     }
 
@@ -91,7 +95,7 @@ public class VoziloControler {
         return voziloService.findAll();
     }
 
-    @RequestMapping(method = POST, value = "/dodajKomentar")
+    @PostMapping(value = "/dodajKomentar")
     public void dodajVozilo(@RequestBody Komentar komentar) throws Exception {
 
         komentarService.create(komentar.getIdVozila(),komentar.getKomentar());
@@ -102,5 +106,18 @@ public class VoziloControler {
 
 
         return komentarService.findByIdVozila(idVozila);
+    }
+
+    @GetMapping(value = "/sortiraj/{vrstaSortiranja}")
+    public Collection<Vozilo> sortirajVozila(@PathVariable String vrstaSortiranja) {
+
+
+        return voziloService.sortiraj(vrstaSortiranja);
+    }
+
+    @PostMapping(value = "/rezervisi")
+    public void rezervisiVozilo(@RequestBody ZauzeceVozila zauzeceVozila) throws Exception {
+
+        zauzeceVozilaService.add(zauzeceVozila);
     }
 }

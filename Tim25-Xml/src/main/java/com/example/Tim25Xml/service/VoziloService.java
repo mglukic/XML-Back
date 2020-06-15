@@ -11,8 +11,10 @@ import java.util.List;
 
 public interface VoziloService {
 
-    Collection<Vozilo> findAll();
+    List<Vozilo> findAll();
+    Collection<Vozilo> sortiraj(String vrstraSortiranja);
     Vozilo findById(Long id);
     Vozilo create(Vozilo vozilo) throws Exception;
+    Vozilo update(Vozilo vozilo) throws Exception;
 
 }
