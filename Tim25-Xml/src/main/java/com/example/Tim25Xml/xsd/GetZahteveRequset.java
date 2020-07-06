@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="vozilo" type="{http://example.com/voziloservice/xsd}Vozilo"/&gt;
+ *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,36 +32,36 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "vozilo"
+    "username"
 })
-@XmlRootElement(name = "postVoziloRequest")
-public class PostVoziloRequest {
+@XmlRootElement(name = "getZahteveRequset")
+public class GetZahteveRequset {
 
     @XmlElement(required = true)
-    protected Vozilo vozilo;
+    protected String username;
 
     /**
-     * Gets the value of the vozilo property.
+     * Gets the value of the username property.
      * 
      * @return
      *     possible object is
-     *     {@link Vozilo }
+     *     {@link String }
      *     
      */
-    public Vozilo getVozilo() {
-        return vozilo;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Sets the value of the vozilo property.
+     * Sets the value of the username property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Vozilo }
+     *     {@link String }
      *     
      */
-    public void setVozilo(Vozilo value) {
-        this.vozilo = value;
+    public void setUsername(String value) {
+        this.username = value;
     }
 
 }

@@ -1,11 +1,14 @@
 package com.example.Tim25Xml.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Vozilo  {
@@ -39,8 +42,8 @@ public class Vozilo  {
     @Column(name = "KlasaAutomobila", nullable = false)
     private String klasaAutomobila;
 
-    @Column(name = "Cena", nullable = false)
-    private double cena;
+    @Column(name = "CenovnikId", nullable = false)
+    private String cenovnikId;
 
     @Column(name = "PredjenaKilometraza", nullable = false)
     private double predjenaKilometraza;
@@ -54,13 +57,26 @@ public class Vozilo  {
     @Column(name = "BrojSedistaZaDecu", nullable = false)
     private int brojSedistaZaDecu;
 
-    @Column(name = "BrojKomentara", nullable = false)
-    private int brojKomentara;
+    //@Column(name = "BrojKomentara", nullable = false)
+    //private int brojKomentara;
+
+    @Column(name = "IznajmljivacId", nullable = false)
+    private Long iznajmljivacId;
+
+    @Column(name = "IznajmljivacMail", nullable = false)
+    private String iznajmljivacMail;
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "VOZILO_ZAHTEV",
+            joinColumns = @JoinColumn(name = "vozilo_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "zahtev_id", referencedColumnName = "id"))
+    private Set<Zahtev> zahtevi = new HashSet<Zahtev>();
 
     public Vozilo() {
     }
 
-    public Vozilo(LocalDate zauzetoOd,LocalDate zauzetoDo,String mesto, String markaAutomobila, String modelAutomobila, String menjac, String gorivo, String klasaAutomobila, double cena, double predjenaKilometraza, String planiranoZaPreci, boolean cwd, int brojSedistaZaDecu) {
+    public Vozilo(LocalDate zauzetoOd,LocalDate zauzetoDo,String mesto, String markaAutomobila, String modelAutomobila, String menjac, String gorivo, String klasaAutomobila, String cenovnik, double predjenaKilometraza, String planiranoZaPreci, boolean cwd, int brojSedistaZaDecu, Long iznajmljivacId, String iznajmljivacMail) {
         this.zauzetoOd=zauzetoOd;
         this.zauzetoDo=zauzetoDo;
         this.mesto = mesto;
@@ -69,12 +85,15 @@ public class Vozilo  {
         this.menjac = menjac;
         this.gorivo = gorivo;
         this.klasaAutomobila = klasaAutomobila;
-        this.cena = cena;
+        this.cenovnikId = cenovnik;
         this.predjenaKilometraza = predjenaKilometraza;
         this.planiranoZaPreci = planiranoZaPreci;
         this.cwd = cwd;
         this.brojSedistaZaDecu = brojSedistaZaDecu;
-        this.brojKomentara=0;
+        //this.brojKomentara=0;
+        this.iznajmljivacMail = iznajmljivacMail;
+        this.iznajmljivacId = iznajmljivacId;
+        this.zahtevi=zahtevi;
     }
 
     public Long getId() {
@@ -103,10 +122,6 @@ public class Vozilo  {
 
     public String getKlasaAutomobila() {
         return klasaAutomobila;
-    }
-
-    public double getCena() {
-        return cena;
     }
 
     public double getPredjenaKilometraza() {
@@ -149,10 +164,6 @@ public class Vozilo  {
         this.klasaAutomobila = klasaAutomobila;
     }
 
-    public void setCena(double cena) {
-        this.cena = cena;
-    }
-
     public void setPredjenaKilometraza(double predjenaKilometraza) {
         this.predjenaKilometraza = predjenaKilometraza;
     }
@@ -173,13 +184,13 @@ public class Vozilo  {
         this.id = id;
     }
 
-    public int getBrojKomentara() {
-        return brojKomentara;
-    }
+    //public int getBrojKomentara() {
+    //    return brojKomentara;
+    //}
 
-    public void setBrojKomentara(int brojKomentara) {
-        this.brojKomentara = brojKomentara;
-    }
+    //public void setBrojKomentara(int brojKomentara) {
+    //    this.brojKomentara = brojKomentara;
+    //}
 
     public LocalDate getZauzetoOd() {
         return zauzetoOd;
@@ -197,6 +208,34 @@ public class Vozilo  {
         this.zauzetoDo = zauzetoDo;
     }
 
+    public String getCenovnikId() {
+        return cenovnikId;
+    }
+
+    public void setCenovnikId(String cenovnikId) {
+        this.cenovnikId = cenovnikId;
+    }
+
+    public String getIznajmljivacMail() {
+        return iznajmljivacMail;
+    }
+
+    public void setIznajmljivacMail(String iznajmljivacMail) {
+        this.iznajmljivacMail = iznajmljivacMail;
+    }
+
+    public Long getIznajmljivacId() {
+        return iznajmljivacId;
+    }
+
+    public void setIznajmljivacId(Long iznajmljivacId) {
+        this.iznajmljivacId = iznajmljivacId;
+    }
+
+    public Set<Zahtev> getZahtevi() {
+        return zahtevi;
+    }
+
     public void copyValues(Vozilo vozilo) {
         this.zauzetoOd=vozilo.getZauzetoOd();
         this.zauzetoDo=vozilo.getZauzetoDo();
@@ -206,12 +245,14 @@ public class Vozilo  {
         this.menjac = vozilo.getMenjac();
         this.gorivo=vozilo.getGorivo();
         this.klasaAutomobila=vozilo.getKlasaAutomobila();
-        this.cena=vozilo.getCena();
+        this.cenovnikId=vozilo.getCenovnikId();
         this.cwd=vozilo.isCwd();
         this.brojSedistaZaDecu=vozilo.getBrojSedistaZaDecu();
         this.predjenaKilometraza=vozilo.getPredjenaKilometraza();
         this.planiranoZaPreci=vozilo.getPlaniranoZaPreci();
-        this.brojKomentara=vozilo.getBrojKomentara();
+        //this.brojKomentara=vozilo.getBrojKomentara();
+        this.iznajmljivacId = vozilo.getIznajmljivacId();
+        this.iznajmljivacMail = vozilo.getIznajmljivacMail();
 
     }
 

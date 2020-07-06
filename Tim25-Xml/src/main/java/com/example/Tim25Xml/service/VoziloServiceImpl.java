@@ -5,6 +5,9 @@ import com.example.Tim25Xml.model.Vozilo;
 import com.example.Tim25Xml.repository.KomentrRepository;
 import com.example.Tim25Xml.repository.VoziloRepository;
 import com.example.Tim25Xml.soap.VoziloClient;
+import com.example.Tim25Xml.xsd.PostProbaResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import java.util.*;
 
 @Service
 public class VoziloServiceImpl implements VoziloService {
+
+    final static Logger logger = LoggerFactory.getLogger(VoziloServiceImpl.class);
 
     @Autowired
     private VoziloRepository voziloRepository;
@@ -35,14 +40,13 @@ public class VoziloServiceImpl implements VoziloService {
 
     @Override
     public List<Vozilo> sortiraj(String vrstraSortiranja) {
-        List<Vozilo>svaVozila=voziloRepository.findAll();
-        if(vrstraSortiranja.equals("KILOMETRAZA")){
-            svaVozila.sort(Comparator.comparingDouble(Vozilo :: getPredjenaKilometraza));
+        List<Vozilo> svaVozila = voziloRepository.findAll();
+        if (vrstraSortiranja.equals("KILOMETRAZA")) {
+            svaVozila.sort(Comparator.comparingDouble(Vozilo::getPredjenaKilometraza));
             return svaVozila;
-        }
-        else if(vrstraSortiranja.equals("KOMENTARI")){
+        } else if (vrstraSortiranja.equals("KOMENTARI")) {
 
-            svaVozila.sort(Comparator.comparingInt(Vozilo :: getBrojKomentara));
+            //svaVozila.sort(Comparator.comparingInt(Vozilo :: getBrojKomentara));
             return svaVozila;
         }
         return svaVozila;
@@ -57,8 +61,9 @@ public class VoziloServiceImpl implements VoziloService {
     public Vozilo create(Vozilo vozilo) throws Exception {
         Vozilo ret = new Vozilo();
         ret.copyValues(vozilo);
-        sendToMicroServices(vozilo);
         ret = voziloRepository.save(ret);
+        sendToMicroServices(vozilo);
+
         return ret;
     }
 
@@ -71,11 +76,21 @@ public class VoziloServiceImpl implements VoziloService {
 
 
     private void sendToMicroServices(Vozilo vozilo) throws DatatypeConfigurationException {
-        if(voziloClient.postVozilo(vozilo) == null) {
-            System.out.println("***ERROR OglasService > sendToMicroServices > oglasClient > returned NULL!");
+        if (voziloClient.postVozilo(vozilo) == null) {
+            logger.info("***ERROR VoziloService > sendToMicroServices > voziloClient > returned NULL!");
         } else {
-            System.out.println("***OglasService > sendToMicroServices > oglasClient > uspesno poslat oglaS!");
+            logger.info("***VoziloService > sendToMicroServices > voziloClient > uspesno poslat vozilo!");
         }
+
+        PostProbaResponse response = voziloClient.postProba(vozilo.getMarkaAutomobila() + vozilo.getModelAutomobila());
+
+        if (response == null) {
+            logger.info("***ERROR VoziloService > sendToMicroServices > voziloClient > returned NULL! ((ZA PostProba))");
+        } else {
+            logger.info("***VoziloService > sendToMicroServices > voziloClient > uspesno proslo PostProba! VRATIO:: " + response.getPrima());
+        }
+
+
     }
 
 }
