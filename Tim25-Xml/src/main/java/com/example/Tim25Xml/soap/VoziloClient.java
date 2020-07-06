@@ -1,6 +1,8 @@
 package com.example.Tim25Xml.soap;
 
 import com.example.Tim25Xml.model.Vozilo;
+import com.example.Tim25Xml.xsd.PostProbaRequest;
+import com.example.Tim25Xml.xsd.PostProbaResponse;
 import com.example.Tim25Xml.xsd.PostVoziloRequest;
 import com.example.Tim25Xml.xsd.PostVoziloResponse;
 import org.slf4j.Logger;
@@ -32,36 +34,59 @@ public class VoziloClient extends WebServiceGatewaySupport {
 
         vozilo.setVaziOd(xcalOd);
         vozilo.setVaziDo(xcalDo);
-        vozilo.setMesto(vozilo.getMesto());
+        vozilo.setMesto(voziloToXSD.getMesto());
         vozilo.setMarkaAutomobila(voziloToXSD.getMarkaAutomobila());
         vozilo.setModelAutomobila(voziloToXSD.getModelAutomobila());
         vozilo.setTipMenjaca(voziloToXSD.getMenjac());
         vozilo.setTipGoriva(voziloToXSD.getGorivo());
         vozilo.setKlasaVozila(voziloToXSD.getKlasaAutomobila());
-        vozilo.setCenovnikId("1"); //TODO: Vamo promeniti cenovnik id
+        vozilo.setCenovnikId(voziloToXSD.getCenovnikId());
         vozilo.setPredjenaKilometraza(voziloToXSD.getPredjenaKilometraza());
         vozilo.setOgranicenaKilometraza(voziloToXSD.getPlaniranoZaPreci()); //TODO: vamo proveriti dal promeniti planirano
         vozilo.setCDWProtection(voziloToXSD.isCwd());
         vozilo.setBrojSedistaDeca(voziloToXSD.getBrojSedistaZaDecu());
-        vozilo.setIznajmljivacId(1); //TODO: Vamo promeniti ko iznamljuje
+        vozilo.setIznajmljivacId(voziloToXSD.getIznajmljivacId());
+        vozilo.setIznajmljivacMail(voziloToXSD.getIznajmljivacMail());
+
+        vozilo.getZahtevi();
 
         PostVoziloRequest request = new PostVoziloRequest();
         request.setVozilo(vozilo);
 
-        logger.info("Post Vozila preko web servisa... ");
+        logger.info("*-+Post Vozila preko web servisa(Trenutno u agentskoj)... Pokusava da posalje web servisu!!\nSalje vozilo::: " + vozilo.toString());
 
         PostVoziloResponse response = null;
 
         try {
             response = (PostVoziloResponse) getWebServiceTemplate().marshalSendAndReceive(
-                    "http://localhost:8080/car/ws/postVozilo", request,
+                    "http://localhost:8080/car/ws/soap", request,
                     new SoapActionCallback("http://example.com/voziloservice/xsd/PostVoziloRequest"));
         } catch (Exception e) {
-            System.out.println("***ERROR VoziloClient > greska prilikom slanja!");
+            logger.info("***ERROR VoziloClient > greska prilikom slanja!");
         }
+//        response = (PostVoziloResponse) getWebServiceTemplate().marshalSendAndReceive(
+//                    "http://localhost:8080/car/ws/soap", request,
+//                    new SoapActionCallback("http://example.com/voziloservice/xsd/PostVoziloRequest"));
 
         return response;
 
+    }
+
+    public PostProbaResponse postProba(String stringZaPost) {
+        PostProbaRequest request = new PostProbaRequest();
+        request.setSalje(stringZaPost);
+
+        logger.info("+-*PostProbaResponse u agentskoj.. Pokusava da posalje web servisu!!");
+
+        PostProbaResponse response = null;
+        try {
+            response = (PostProbaResponse) getWebServiceTemplate().marshalSendAndReceive(
+                    "http://localhost:8080/car/ws/soap", request,
+                    new SoapActionCallback("http://example.com/voziloservice/xsd/PostProbaRequest"));
+        } catch (Exception e) {
+            logger.info("***ERROR VoziloClient > greska prilikom slanja! Prilikom Slanja PostProbaRquest!!");
+        }
+        return response;
     }
 
 

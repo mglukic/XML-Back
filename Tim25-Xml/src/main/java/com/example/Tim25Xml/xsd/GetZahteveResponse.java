@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="zahtevi" type="{http://example.com/voziloservice/xsd}Zahtev" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,27 +37,40 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "success"
+    "zahtevi"
 })
-@XmlRootElement(name = "postVoziloResponse")
-public class PostVoziloResponse {
+@XmlRootElement(name = "getZahteveResponse")
+public class GetZahteveResponse {
 
-    protected boolean success;
-
-    /**
-     * Gets the value of the success property.
-     * 
-     */
-    public boolean isSuccess() {
-        return success;
-    }
+    protected List<Zahtev> zahtevi;
 
     /**
-     * Sets the value of the success property.
+     * Gets the value of the zahtevi property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the zahtevi property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getZahtevi().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Zahtev }
+     * 
      * 
      */
-    public void setSuccess(boolean value) {
-        this.success = value;
+    public List<Zahtev> getZahtevi() {
+        if (zahtevi == null) {
+            zahtevi = new ArrayList<Zahtev>();
+        }
+        return this.zahtevi;
     }
 
 }

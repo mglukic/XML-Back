@@ -41,7 +41,7 @@ public class KomentarServiceImpl implements KomentarService {
         komentrRepository.save(k);
         Vozilo zaIzmenu;
         zaIzmenu = voziloRepository.findById(idVozila);
-        zaIzmenu.setBrojKomentara(zaIzmenu.getBrojKomentara()+1);
+        //zaIzmenu.setBrojKomentara(zaIzmenu.getBrojKomentara()+1);
         zaIzmenu=voziloRepository.update(zaIzmenu);
 
     }
