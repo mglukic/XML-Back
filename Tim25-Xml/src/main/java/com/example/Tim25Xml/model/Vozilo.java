@@ -66,6 +66,9 @@ public class Vozilo  {
     @Column(name = "IznajmljivacMail", nullable = false)
     private String iznajmljivacMail;
 
+    @Column(name = "PomId", nullable = false)
+    private Long pomId;
+
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "VOZILO_ZAHTEV",
@@ -76,7 +79,7 @@ public class Vozilo  {
     public Vozilo() {
     }
 
-    public Vozilo(LocalDate zauzetoOd,LocalDate zauzetoDo,String mesto, String markaAutomobila, String modelAutomobila, String menjac, String gorivo, String klasaAutomobila, String cenovnik, double predjenaKilometraza, String planiranoZaPreci, boolean cwd, int brojSedistaZaDecu, Long iznajmljivacId, String iznajmljivacMail) {
+    public Vozilo(LocalDate zauzetoOd,LocalDate zauzetoDo,String mesto, String markaAutomobila, String modelAutomobila, String menjac, String gorivo, String klasaAutomobila, String cenovnik, double predjenaKilometraza, String planiranoZaPreci, boolean cwd, int brojSedistaZaDecu, Long iznajmljivacId, String iznajmljivacMail, Long pomId) {
         this.zauzetoOd=zauzetoOd;
         this.zauzetoDo=zauzetoDo;
         this.mesto = mesto;
@@ -93,6 +96,7 @@ public class Vozilo  {
         //this.brojKomentara=0;
         this.iznajmljivacMail = iznajmljivacMail;
         this.iznajmljivacId = iznajmljivacId;
+        this.pomId = pomId;
         this.zahtevi=zahtevi;
     }
 
@@ -236,6 +240,18 @@ public class Vozilo  {
         return zahtevi;
     }
 
+    public Long getPomId() {
+        return pomId;
+    }
+
+    public void setPomId(Long pomId) {
+        this.pomId = pomId;
+    }
+
+    public void setZahtevi(Set<Zahtev> zahtevi) {
+        this.zahtevi = zahtevi;
+    }
+
     public void copyValues(Vozilo vozilo) {
         this.zauzetoOd=vozilo.getZauzetoOd();
         this.zauzetoDo=vozilo.getZauzetoDo();
@@ -253,7 +269,32 @@ public class Vozilo  {
         //this.brojKomentara=vozilo.getBrojKomentara();
         this.iznajmljivacId = vozilo.getIznajmljivacId();
         this.iznajmljivacMail = vozilo.getIznajmljivacMail();
+        this.pomId = vozilo.getPomId();
+        this.zahtevi = vozilo.getZahtevi();
 
     }
 
+    @Override
+    public String toString() {
+        return "Vozilo{" +
+                "id=" + id +
+                ", zauzetoOd=" + zauzetoOd +
+                ", zauzetoDo=" + zauzetoDo +
+                ", mesto='" + mesto + '\'' +
+                ", markaAutomobila='" + markaAutomobila + '\'' +
+                ", modelAutomobila='" + modelAutomobila + '\'' +
+                ", menjac='" + menjac + '\'' +
+                ", gorivo='" + gorivo + '\'' +
+                ", klasaAutomobila='" + klasaAutomobila + '\'' +
+                ", cenovnikId='" + cenovnikId + '\'' +
+                ", predjenaKilometraza=" + predjenaKilometraza +
+                ", planiranoZaPreci='" + planiranoZaPreci + '\'' +
+                ", cwd=" + cwd +
+                ", brojSedistaZaDecu=" + brojSedistaZaDecu +
+                ", iznajmljivacId=" + iznajmljivacId +
+                ", iznajmljivacMail='" + iznajmljivacMail + '\'' +
+                ", pomId=" + pomId +
+                ", zahtevi=" + zahtevi +
+                '}';
+    }
 }

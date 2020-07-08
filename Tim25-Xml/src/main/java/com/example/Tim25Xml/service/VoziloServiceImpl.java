@@ -62,7 +62,10 @@ public class VoziloServiceImpl implements VoziloService {
         Vozilo ret = new Vozilo();
         ret.copyValues(vozilo);
         ret = voziloRepository.save(ret);
-        sendToMicroServices(vozilo);
+
+        ret.setPomId(ret.getId());
+        ret = voziloRepository.save(ret);
+        sendToMicroServices(ret);
 
         return ret;
     }

@@ -70,6 +70,7 @@ public class ZahtevServiceImpl implements ZahtevService {
             vozilo.setBrojSedistaZaDecu(voziloXSD.getBrojSedistaDeca());
             vozilo.setIznajmljivacId(voziloXSD.getIznajmljivacId());
             vozilo.setIznajmljivacMail(voziloXSD.getIznajmljivacMail());
+            vozilo.setPomId(voziloXSD.getPomId());
 
             zahtev.getVozila().add(vozilo);
         }
