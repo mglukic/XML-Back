@@ -34,5 +34,23 @@ public class SoapConfiguration {
         return client;
     }
 
+    @Bean
+    public ZahtevClient zahtevClient(Jaxb2Marshaller marshaller) {
+        ZahtevClient client = new ZahtevClient();
+        client.setDefaultUri("http://localhost:8080/car/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+    @Bean
+    public GetAgentClient getAgentClient(Jaxb2Marshaller marshaller) {
+        GetAgentClient client = new GetAgentClient();
+        client.setDefaultUri("http://localhost:8080/car/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
 
 }

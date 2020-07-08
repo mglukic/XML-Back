@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="prima" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="izdavacMail" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,36 +32,36 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "prima"
+    "izdavacMail"
 })
-@XmlRootElement(name = "postProbaResponse")
-public class PostProbaResponse {
+@XmlRootElement(name = "getZahteveByIzdavacMailRequset")
+public class GetZahteveByIzdavacMailRequset {
 
     @XmlElement(required = true)
-    protected String prima;
+    protected String izdavacMail;
 
     /**
-     * Gets the value of the prima property.
+     * Gets the value of the izdavacMail property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPrima() {
-        return prima;
+    public String getIzdavacMail() {
+        return izdavacMail;
     }
 
     /**
-     * Sets the value of the prima property.
+     * Sets the value of the izdavacMail property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPrima(String value) {
-        this.prima = value;
+    public void setIzdavacMail(String value) {
+        this.izdavacMail = value;
     }
 
 }

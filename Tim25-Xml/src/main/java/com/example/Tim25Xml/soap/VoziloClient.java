@@ -48,8 +48,6 @@ public class VoziloClient extends WebServiceGatewaySupport {
         vozilo.setIznajmljivacId(voziloToXSD.getIznajmljivacId());
         vozilo.setIznajmljivacMail(voziloToXSD.getIznajmljivacMail());
 
-        vozilo.getZahtevi();
-
         PostVoziloRequest request = new PostVoziloRequest();
         request.setVozilo(vozilo);
 
