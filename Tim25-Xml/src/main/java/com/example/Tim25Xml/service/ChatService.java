@@ -12,5 +12,5 @@ public interface ChatService {
     public Chat getById(Long id);
     public ArrayList<Message> findAllMessagesByChatId(Long id);
     public Message kreirajPoruku(Message message) throws DatatypeConfigurationException;
-    public Chat kreirajCet(Chat chat) throws DatatypeConfigurationException;
+    public Chat kreirajCet(Long id) throws DatatypeConfigurationException;
 }

@@ -42,21 +42,22 @@ public class ZahtevKontroler {
     }
 
     @GetMapping(value = "/getMejlAgenta")
-    public ResponseEntity<?> getMejlUlogovanogAgenta() {
+    public ResponseEntity<String> getMejlUlogovanogAgenta() {
 
         GetMailUlogovanogAgentaResponse mailUlogovanogAgentaResponse = getAgentClient.getMailUlogovanogAgentaResponse();
 
         if (mailUlogovanogAgentaResponse == null) {
             return new ResponseEntity<>("Neuspesno preuzimanje mejl ulogovanog agenta!!", HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(mailUlogovanogAgentaResponse.getVraceniMejl(), HttpStatus.CREATED);
+            return new ResponseEntity<>(mailUlogovanogAgentaResponse.getVraceniMejl(), HttpStatus.OK);
         }
     }
 
     @GetMapping(value = "/getByPodnosilacEmail/{idPodnosilac}")
-    public String getByPodnosilacEmail(@PathVariable("idPodnosilac") Long  idPodnosilac) {
+    public ResponseEntity<String> getByPodnosilacEmail(@PathVariable("idPodnosilac") Long  idPodnosilac) {
         GetMailPodnosiocaResponse mail = getKorisnikEmailById.postGetKorisnikEmailById(idPodnosilac);
-        return mail.getVraceniMejl();
+        return new ResponseEntity<>(mail.getVraceniMejl(), HttpStatus.OK);
+
     }
 
 
