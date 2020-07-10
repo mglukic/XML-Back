@@ -98,7 +98,7 @@ public class VoziloControler {
         komentarService.create(komentar.getIdVozila(),komentar.getKomentar());
     }
 
-    @RequestMapping(method = GET, value = "listaVozila/vratiKomentare/{idVozila}")
+    @RequestMapping(method = GET, value = "/listaVozila/vratiKomentare/{idVozila}")
     public Collection<Komentar> vratiKometareVozila(@PathVariable Long idVozila) {
 
 

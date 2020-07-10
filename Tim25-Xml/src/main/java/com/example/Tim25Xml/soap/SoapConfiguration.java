@@ -1,5 +1,6 @@
 package com.example.Tim25Xml.soap;
 
+import com.example.Tim25Xml.model.Komentar;
 import com.example.Tim25Xml.model.Vozilo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -86,6 +87,16 @@ public class SoapConfiguration {
 
 
 
+
+
+    @Bean
+    public KomentarClient komentarClient(Jaxb2Marshaller marshaller) {
+        KomentarClient client = new KomentarClient();
+        client.setDefaultUri("http://localhost:8080/car/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
 
 
 }

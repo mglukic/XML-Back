@@ -26,7 +26,7 @@ import java.util.List;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="zahtevi" type="{http://example.com/voziloservice/xsd}Zahtev" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="komentari" type="{http://example.com/voziloservice/xsd}Komentar" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -37,40 +37,40 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "zahtevi"
+    "komentari"
 })
-@XmlRootElement(name = "getZahteveByIzdavacMailResponse")
-public class GetZahteveByIzdavacMailResponse {
+@XmlRootElement(name = "getKomentareByIdVozilaResponse")
+public class GetKomentareByIdVozilaResponse {
 
-    protected List<Zahtev> zahtevi;
+    protected List<Komentar> komentari;
 
     /**
-     * Gets the value of the zahtevi property.
+     * Gets the value of the komentari property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the zahtevi property.
+     * This is why there is not a <CODE>set</CODE> method for the komentari property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getZahtevi().add(newItem);
+     *    getKomentari().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Zahtev }
+     * {@link Komentar }
      * 
      * 
      */
-    public List<Zahtev> getZahtevi() {
-        if (zahtevi == null) {
-            zahtevi = new ArrayList<Zahtev>();
+    public List<Komentar> getKomentari() {
+        if (komentari == null) {
+            komentari = new ArrayList<Komentar>();
         }
-        return this.zahtevi;
+        return this.komentari;
     }
 
 }

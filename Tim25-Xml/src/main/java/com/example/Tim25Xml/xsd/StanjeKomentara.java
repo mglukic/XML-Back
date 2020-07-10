@@ -13,40 +13,36 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Stanje.
+ * <p>Java class for StanjeKomentara.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="Stanje"&gt;
+ * &lt;simpleType name="StanjeKomentara"&gt;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *     &lt;enumeration value="PENDING"/&gt;
- *     &lt;enumeration value="RESERVED"/&gt;
- *     &lt;enumeration value="PAID"/&gt;
- *     &lt;enumeration value="CANCELED"/&gt;
- *     &lt;enumeration value="WAITING_REVIEW"/&gt;
- *     &lt;enumeration value="REVIEWED"/&gt;
+ *     &lt;enumeration value="OBJAVLJEN"/&gt;
+ *     &lt;enumeration value="ODBIJEN"/&gt;
+ *     &lt;enumeration value="ODOBREN"/&gt;
+ *     &lt;enumeration value="ODGOVOREN"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
  * 
  */
-@XmlType(name = "Stanje")
+@XmlType(name = "StanjeKomentara")
 @XmlEnum
-public enum Stanje {
+public enum StanjeKomentara {
 
-    PENDING,
-    RESERVED,
-    PAID,
-    CANCELED,
-    WAITING_REVIEW,
-    REVIEWED;
+    OBJAVLJEN,
+    ODBIJEN,
+    ODOBREN,
+    ODGOVOREN;
 
     public String value() {
         return name();
     }
 
-    public static Stanje fromValue(String v) {
+    public static StanjeKomentara fromValue(String v) {
         return valueOf(v);
     }
 

@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="prima" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="komentar" type="{http://example.com/voziloservice/xsd}Komentar"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,36 +32,36 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "prima"
+    "komentar"
 })
-@XmlRootElement(name = "postProbaResponse")
-public class PostProbaResponse {
+@XmlRootElement(name = "postKomentarRequest")
+public class PostKomentarRequest {
 
     @XmlElement(required = true)
-    protected String prima;
+    protected Komentar komentar;
 
     /**
-     * Gets the value of the prima property.
+     * Gets the value of the komentar property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Komentar }
      *     
      */
-    public String getPrima() {
-        return prima;
+    public Komentar getKomentar() {
+        return komentar;
     }
 
     /**
-     * Sets the value of the prima property.
+     * Sets the value of the komentar property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Komentar }
      *     
      */
-    public void setPrima(String value) {
-        this.prima = value;
+    public void setKomentar(Komentar value) {
+        this.komentar = value;
     }
 
 }

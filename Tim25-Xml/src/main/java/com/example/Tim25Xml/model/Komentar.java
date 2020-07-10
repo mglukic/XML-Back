@@ -15,12 +15,16 @@ public class Komentar {
     @Column(name = "Komentar", nullable = false)
     private String komentar;
 
+    @Column(name = "Stanje", nullable = false)
+    private StanjeKomentara stanje;
+
     public Komentar() {
     }
 
     public Komentar(Long idVozila, String komentar) {
         this.idVozila = idVozila;
         this.komentar = komentar;
+        this.stanje = StanjeKomentara.OBJAVLJEN;
     }
 
     public Long getId() {
@@ -45,5 +49,23 @@ public class Komentar {
 
     public void setKomentar(String komentar) {
         this.komentar = komentar;
+    }
+
+    public StanjeKomentara getStanje() {
+        return stanje;
+    }
+
+    public void setStanje(StanjeKomentara stanje) {
+        this.stanje = stanje;
+    }
+
+    @Override
+    public String toString() {
+        return "Komentar{" +
+                "id=" + id +
+                ", idVozila=" + idVozila +
+                ", komentar='" + komentar + '\'' +
+                ", stanje=" + stanje +
+                '}';
     }
 }
