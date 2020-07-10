@@ -50,4 +50,19 @@ public class CenovnikController {
 
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
+
+    //get by naziv
+    @GetMapping(value = "/poNazivu/{naziv}")
+    public ResponseEntity<?> getCenovnikByNaziv(@PathVariable("naziv") String naziv) throws Exception {
+
+        Cenovnik c = new Cenovnik();
+        try {
+            c = cenovnikService.getByNaziv(naziv);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Moguce da ima vise cenovnika sa istim imenom. Obrisite neki naziv!", HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
+        return new ResponseEntity<>(c, HttpStatus.CREATED);
+    }
 }

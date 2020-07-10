@@ -84,11 +84,23 @@ public class KomentarServiceImpl implements KomentarService {
     @Override
     public void create(Long idVozila, String komentar) throws Exception {
         Komentar k=new Komentar(idVozila,komentar);
-        komentrRepository.save(k);
+        k.setStanje(com.example.Tim25Xml.model.StanjeKomentara.ODOBREN);
+        k = komentrRepository.save(k);
+
+        sendToMicroServices(k);
+
         Vozilo zaIzmenu;
         zaIzmenu = voziloRepository.findById(idVozila);
         //zaIzmenu.setBrojKomentara(zaIzmenu.getBrojKomentara()+1);
         zaIzmenu=voziloRepository.update(zaIzmenu);
 
+    }
+
+    private void sendToMicroServices(Komentar komentar) {
+        if (komentarClient.postKomentar(komentar) == null) {
+            logger.info("***ERROR KomentarService > sendToMicroServices > komentarClient > returned NULL!");
+        } else {
+            logger.info("***KomentarService > sendToMicroServices > komentarClient > uspesno poslat komentar!");
+        }
     }
 }
