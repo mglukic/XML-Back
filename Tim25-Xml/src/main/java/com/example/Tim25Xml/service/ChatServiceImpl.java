@@ -4,6 +4,8 @@ import com.example.Tim25Xml.model.Chat;
 import com.example.Tim25Xml.model.Message;
 import com.example.Tim25Xml.repository.ChatRepository;
 import com.example.Tim25Xml.repository.MessageRepository;
+import com.example.Tim25Xml.soap.GetAgentClient;
+import com.example.Tim25Xml.soap.GetKorisnikEmailById;
 import com.example.Tim25Xml.soap.PostChat;
 import com.example.Tim25Xml.soap.PostMessage;
 import com.example.Tim25Xml.xsd.GetChatByAgentMailResponse;
@@ -32,6 +34,12 @@ public class ChatServiceImpl implements ChatService{
 
     @Autowired
     MessageRepository messageRepository;
+
+    @Autowired
+    private GetAgentClient getAgentClient;
+
+    @Autowired
+    private GetKorisnikEmailById getKorisnikEmailById;
 
     @Override
     public ArrayList<Chat> findAllByAuthorEmail(String email) {
@@ -132,13 +140,13 @@ public class ChatServiceImpl implements ChatService{
     }
 
     @Override
-    public Chat kreirajCet(Chat chat) throws DatatypeConfigurationException {
+    public Chat kreirajCet(Long id) throws DatatypeConfigurationException {
         Chat ret = new Chat();
-        ret.setUser1(chat.getUser1());
-        ret.setUser2(chat.getUser2());
+        ret.setUser1(getKorisnikEmailById.postGetKorisnikEmailById(id).getVraceniMejl());
+        ret.setUser2(getAgentClient.getMailUlogovanogAgentaResponse().getVraceniMejl());
 
         ret = chatRepository.save(ret);
-        sendChatToMicroservices(chat);
+        sendChatToMicroservices(ret);
 
 
         return ret;

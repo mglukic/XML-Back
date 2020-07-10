@@ -50,10 +50,10 @@ public class ChatController {
         return chatService.kreirajPoruku(message);
     }
 
-    @PostMapping( value = "")
-    public Chat kreirajChat(@RequestBody Chat chat) throws Exception {
+    @PostMapping( value = "/{idPodnosilac}")
+    public Chat kreirajChat(@PathVariable("idPodnosilac") Long  idPodnosilac) throws Exception {
 
-        return chatService.kreirajCet(chat);
+        return chatService.kreirajCet(idPodnosilac);
     }
 
 }

@@ -17,7 +17,7 @@ public class PostChat  extends WebServiceGatewaySupport {
 
         chatXSD.setUser1(chatModel.getUser1());
         chatXSD.setUser2(chatModel.getUser2());
-        chatXSD.setId(0);
+        chatXSD.setId(chatModel.getId());
 
         PostChatRequest request = new PostChatRequest();
         request.setChat(chatXSD);
@@ -27,7 +27,7 @@ public class PostChat  extends WebServiceGatewaySupport {
 
         try {
             response = (PostChatResponse) getWebServiceTemplate().marshalSendAndReceive(
-                    "http://localhost:8080/user/ws/soap", request,
+                    "http://localhost:8080/user/ws/postChatResponse", request,
                     new SoapActionCallback("http://example.com/adninservice/xsd/PostChatRequest"));
         } catch (Exception e) {
             logger.info("***ERROR ChatClient > greska prilikom slanja!");
