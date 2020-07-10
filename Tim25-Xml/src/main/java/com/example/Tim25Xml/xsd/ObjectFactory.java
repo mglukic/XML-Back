@@ -116,6 +116,7 @@ public class ObjectFactory {
         return new GetMailUlogovanogAgentaResponse();
     }
 
+
     /**
      * Create an instance of {@link GetKomentareByIdVozilaRequest }
      * 
@@ -155,5 +156,99 @@ public class ObjectFactory {
     public PostKomentarResponse createPostKomentarResponse() {
         return new PostKomentarResponse();
     }
+
+
+    /**
+     * Create an instance of {@link GetMailPodnosiocaRequest }
+     *
+     */
+    public GetMailPodnosiocaRequest createGetMailPodnosiocaRequest() {
+        return new GetMailPodnosiocaRequest();
+    }
+
+
+    /**
+     * Create an instance of {@link GetMailPodnosiocaResponse }
+     *
+     */
+    public GetMailPodnosiocaResponse createGetMailPodnosiocaResponse() {
+        return new GetMailPodnosiocaResponse();
+    }
+
+
+
+
+    /**
+     * Create an instance of {@link PostChatRequest }
+     *
+     */
+    public PostChatRequest createPostChatRequest() {
+        return new PostChatRequest();
+    }
+
+
+    /**
+     * Create an instance of {@link PostChatResponse }
+     *
+     */
+    public PostChatResponse createPostChatResponse() {
+        return new PostChatResponse();
+    }
+
+
+    /**
+     * Create an instance of {@link PostMessageRequest }
+     *
+     */
+    public PostMessageRequest createPostMessageRequest() {
+        return new PostMessageRequest();
+    }
+
+
+    /**
+     * Create an instance of {@link PostMessageResponse }
+     *
+     */
+    public PostMessageResponse createPostMessageResponse() {
+        return new PostMessageResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetChatByAgentMailRequest }
+     *
+     */
+    public GetChatByAgentMailRequest createGetChatByAgentMailRequest() {
+        return new GetChatByAgentMailRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetChatByAgentMailResponse }
+     *
+     */
+    public GetChatByAgentMailResponse createGetChatByAgentMailResponse() {
+        return new GetChatByAgentMailResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetMessageByChatIdRequest }
+     *
+     */
+    public GetMessageByChatIdRequest createGetMessageByChatIdRequest() {
+        return new GetMessageByChatIdRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetMessageByChatIdResponse }
+     *
+     */
+    public GetMessageByChatIdResponse createGetMessageByChatIdResponse() {
+        return new GetMessageByChatIdResponse();
+    }
+
+
+
+
+
+
 
 }

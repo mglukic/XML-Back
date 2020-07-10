@@ -3,6 +3,8 @@ package com.example.Tim25Xml.controler;
 import com.example.Tim25Xml.model.Zahtev;
 import com.example.Tim25Xml.service.ZahtevService;
 import com.example.Tim25Xml.soap.GetAgentClient;
+import com.example.Tim25Xml.soap.GetKorisnikEmailById;
+import com.example.Tim25Xml.xsd.GetMailPodnosiocaResponse;
 import com.example.Tim25Xml.xsd.GetMailUlogovanogAgentaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class ZahtevKontroler {
 
     @Autowired
     private GetAgentClient getAgentClient;
+
+    @Autowired
+    private GetKorisnikEmailById getKorisnikEmailById;
 
     @GetMapping(value = "/getByIzdavacMail/{mail}")
     public ResponseEntity<?> vratiZahteveIzdavaocaByMail(@PathVariable("mail") String  mail) {
@@ -45,10 +50,16 @@ public class ZahtevKontroler {
         if (mailUlogovanogAgentaResponse == null) {
             return new ResponseEntity<>("Neuspesno preuzimanje mejl ulogovanog agenta!!", HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(mailUlogovanogAgentaResponse.getVraceniMejl(), HttpStatus.CREATED);
+            return new ResponseEntity<>(mailUlogovanogAgentaResponse.getVraceniMejl(), HttpStatus.OK);
         }
     }
 
+    @GetMapping(value = "/getByPodnosilacEmail/{idPodnosilac}")
+    public ResponseEntity<String> getByPodnosilacEmail(@PathVariable("idPodnosilac") Long  idPodnosilac) {
+        GetMailPodnosiocaResponse mail = getKorisnikEmailById.postGetKorisnikEmailById(idPodnosilac);
+        return new ResponseEntity<>(mail.getVraceniMejl(), HttpStatus.OK);
+
+    }
 
 
 }

@@ -53,6 +53,41 @@ public class SoapConfiguration {
         return client;
     }
 
+    @Bean
+    public GetKorisnikEmailById getKorisnikEmailById(Jaxb2Marshaller marshaller) {
+        GetKorisnikEmailById client = new GetKorisnikEmailById();
+        //napravi metodu u mikroservisu
+        client.setDefaultUri("http://localhost:8080/car/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+
+
+    @Bean
+    public PostChat postChat(Jaxb2Marshaller marshaller) {
+        PostChat client = new PostChat();
+        //napravi metodu u mikroservisu
+        client.setDefaultUri("http://localhost:8080/user/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+    @Bean
+    public PostMessage postMessage(Jaxb2Marshaller marshaller) {
+        PostMessage client = new PostMessage();
+        //napravi metodu u mikroservisu
+        client.setDefaultUri("http://localhost:8080/user/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+
+
+
 
     @Bean
     public KomentarClient komentarClient(Jaxb2Marshaller marshaller) {
