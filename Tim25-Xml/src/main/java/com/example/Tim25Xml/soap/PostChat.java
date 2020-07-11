@@ -3,6 +3,8 @@ package com.example.Tim25Xml.soap;
 import com.example.Tim25Xml.model.Chat;
 import com.example.Tim25Xml.model.Vozilo;
 import com.example.Tim25Xml.xsd.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
@@ -10,6 +12,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 public class PostChat  extends WebServiceGatewaySupport {
 
+    final static Logger logger = LoggerFactory.getLogger(PostChat.class);
 
     public PostChatResponse postChat(Chat chatModel) throws DatatypeConfigurationException {
 
@@ -22,12 +25,13 @@ public class PostChat  extends WebServiceGatewaySupport {
         PostChatRequest request = new PostChatRequest();
         request.setChat(chatXSD);
 
+        logger.info("***Chat" + request.getChat().getUser1(),request.getChat().getUser1());
         PostChatResponse response = null;
 
 
         try {
             response = (PostChatResponse) getWebServiceTemplate().marshalSendAndReceive(
-                    "http://localhost:8080/user/ws/postChatResponse", request,
+                    "http://localhost:8080/user/ws/soap", request,
                     new SoapActionCallback("http://example.com/adninservice/xsd/PostChatRequest"));
         } catch (Exception e) {
             logger.info("***ERROR ChatClient > greska prilikom slanja!");

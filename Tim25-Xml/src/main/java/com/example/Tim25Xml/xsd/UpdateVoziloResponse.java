@@ -10,7 +10,6 @@ package com.example.Tim25Xml.xsd;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="chat" type="{http://example.com/voziloservice/xsd}Chat"/&gt;
+ *         &lt;element name="uspesno" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,36 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "chat"
+    "uspesno"
 })
-@XmlRootElement(name = "postChatRequest")
-public class PostChatRequest {
+@XmlRootElement(name = "updateVoziloResponse")
+public class UpdateVoziloResponse {
 
-    @XmlElement(required = true)
-    protected Chat chat;
+    protected boolean uspesno;
 
     /**
-     * Gets the value of the chat property.
+     * Gets the value of the uspesno property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Chat }
-     *     
      */
-    public Chat getChat() {
-        return chat;
+    public boolean isUspesno() {
+        return uspesno;
     }
 
     /**
-     * Sets the value of the chat property.
+     * Sets the value of the uspesno property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Chat }
-     *     
      */
-    public void setChat(Chat value) {
-        this.chat = value;
+    public void setUspesno(boolean value) {
+        this.uspesno = value;
     }
 
 }
