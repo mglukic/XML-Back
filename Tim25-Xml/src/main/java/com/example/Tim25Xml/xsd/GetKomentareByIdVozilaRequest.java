@@ -8,7 +8,10 @@
 
 package com.example.Tim25Xml.xsd;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -21,7 +24,7 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="prima" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="idVozila" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,36 +35,27 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "prima"
+    "idVozila"
 })
-@XmlRootElement(name = "postProbaResponse")
-public class PostProbaResponse {
+@XmlRootElement(name = "getKomentareByIdVozilaRequest")
+public class GetKomentareByIdVozilaRequest {
 
-    @XmlElement(required = true)
-    protected String prima;
+    protected long idVozila;
 
     /**
-     * Gets the value of the prima property.
+     * Gets the value of the idVozila property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getPrima() {
-        return prima;
+    public long getIdVozila() {
+        return idVozila;
     }
 
     /**
-     * Sets the value of the prima property.
+     * Sets the value of the idVozila property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setPrima(String value) {
-        this.prima = value;
+    public void setIdVozila(long value) {
+        this.idVozila = value;
     }
 
 }

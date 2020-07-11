@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CenovnikRepository extends JpaRepository<Cenovnik, Long> {
 
+    Cenovnik findByNaziv(String naziv);
 }

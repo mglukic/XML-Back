@@ -6,9 +6,14 @@ import com.example.Tim25Xml.model.dto.SlikaDTO;
 import com.example.Tim25Xml.repository.ImageRepository;
 import com.example.Tim25Xml.repository.SlikaRepository;
 import com.example.Tim25Xml.service.*;
+import com.example.Tim25Xml.soap.OcenaClient;
+import com.example.Tim25Xml.xsd.GetKomentareByIdVozilaResponse;
+import com.example.Tim25Xml.xsd.GetOceneByIdVozilaResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import javafx.print.Collation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +40,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/api/vozilo")
 public class VoziloControler {
 
+    final static Logger logger = LoggerFactory.getLogger(VoziloControler.class);
+
     @Autowired
     private VoziloService voziloService;
     @Autowired
@@ -45,6 +52,9 @@ public class VoziloControler {
 
     @Autowired
     private ZauzeceVozilaService zauzeceVozilaService;
+
+    @Autowired
+    private OcenaClient ocenaClient;
 
    /* @Autowired
     private SlikaService slikaService;*/
@@ -98,7 +108,7 @@ public class VoziloControler {
         komentarService.create(komentar.getIdVozila(),komentar.getKomentar());
     }
 
-    @RequestMapping(method = GET, value = "listaVozila/vratiKomentare/{idVozila}")
+    @RequestMapping(method = GET, value = "/listaVozila/vratiKomentare/{idVozila}")
     public Collection<Komentar> vratiKometareVozila(@PathVariable Long idVozila) {
 
 
@@ -148,6 +158,21 @@ public class VoziloControler {
         ImageModel img = new ImageModel(retrievedImage.get().getName(), retrievedImage.get().getType(),
                 decompressBytes(retrievedImage.get().getPicByte()));
         return img;
+    }
+
+    //vraca prosecnu ocenu na osnovu id vozila
+    @GetMapping(value = "/getOcenaByIdVozila/{idVozila}")
+    public double getAverageRate(@PathVariable Long idVozila) {
+
+        GetOceneByIdVozilaResponse response = ocenaClient.getOceneByIdVozila(idVozila);
+
+        if (response == null) {
+            logger.info("***ERROR VoziloController > ocenaClient > returned NULL!");
+            return 0;
+        } else {
+            logger.info("***KomentarService > komentarClient > uspesno dobijena ocena!");
+            return response.getOcena();
+        }
     }
 
     /*

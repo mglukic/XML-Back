@@ -45,6 +45,7 @@ public class ZahtevKontroler {
     public ResponseEntity<String> getMejlUlogovanogAgenta() {
 
         GetMailUlogovanogAgentaResponse mailUlogovanogAgentaResponse = getAgentClient.getMailUlogovanogAgentaResponse();
+        //return mailUlogovanogAgentaResponse.getVraceniMejl();
 
         if (mailUlogovanogAgentaResponse == null) {
             return new ResponseEntity<>("Neuspesno preuzimanje mejl ulogovanog agenta!!", HttpStatus.NOT_FOUND);
