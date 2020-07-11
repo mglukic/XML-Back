@@ -98,5 +98,14 @@ public class SoapConfiguration {
         return client;
     }
 
+    @Bean
+    public OcenaClient ocenaClient(Jaxb2Marshaller marshaller) {
+        OcenaClient client = new OcenaClient();
+        client.setDefaultUri("http://localhost:8080/car/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
 
 }
