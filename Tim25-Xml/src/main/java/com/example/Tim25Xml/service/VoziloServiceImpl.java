@@ -4,6 +4,7 @@ package com.example.Tim25Xml.service;
 import com.example.Tim25Xml.model.Vozilo;
 import com.example.Tim25Xml.repository.KomentrRepository;
 import com.example.Tim25Xml.repository.VoziloRepository;
+import com.example.Tim25Xml.soap.GetAgentClient;
 import com.example.Tim25Xml.soap.VoziloClient;
 import com.example.Tim25Xml.xsd.PostProbaResponse;
 import org.slf4j.Logger;
@@ -26,6 +27,9 @@ public class VoziloServiceImpl implements VoziloService {
 
     @Autowired
     private VoziloRepository voziloRepository;
+
+    @Autowired
+    private GetAgentClient getAgentClient;
 
     @Autowired
     private KomentrRepository komentrRepository;
@@ -60,7 +64,9 @@ public class VoziloServiceImpl implements VoziloService {
     @Override
     public Vozilo create(Vozilo vozilo) throws Exception {
         Vozilo ret = new Vozilo();
+
         ret.copyValues(vozilo);
+        ret.setIznajmljivacMail(getAgentClient.getMailUlogovanogAgentaResponse().getVraceniMejl());
         ret = voziloRepository.save(ret);
 
         ret.setPomId(ret.getId());

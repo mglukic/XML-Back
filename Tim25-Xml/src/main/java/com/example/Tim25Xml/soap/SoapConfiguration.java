@@ -1,6 +1,5 @@
 package com.example.Tim25Xml.soap;
 
-import com.example.Tim25Xml.model.Vozilo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -62,12 +61,18 @@ public class SoapConfiguration {
         return client;
     }
 
-
+    @Bean
+    public UpdateVozilo updateVoziloClient(Jaxb2Marshaller marshaller) {
+        UpdateVozilo client = new UpdateVozilo();
+        client.setDefaultUri("http://localhost:8080/car/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
 
     @Bean
     public PostChat postChat(Jaxb2Marshaller marshaller) {
         PostChat client = new PostChat();
-        //napravi metodu u mikroservisu
         client.setDefaultUri("http://localhost:8080/user/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
@@ -77,7 +82,6 @@ public class SoapConfiguration {
     @Bean
     public PostMessage postMessage(Jaxb2Marshaller marshaller) {
         PostMessage client = new PostMessage();
-        //napravi metodu u mikroservisu
         client.setDefaultUri("http://localhost:8080/user/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);

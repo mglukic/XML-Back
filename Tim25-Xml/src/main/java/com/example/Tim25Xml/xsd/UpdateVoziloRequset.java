@@ -10,7 +10,6 @@ package com.example.Tim25Xml.xsd;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,7 +24,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="chat" type="{http://example.com/voziloservice/xsd}Chat"/&gt;
+ *         &lt;element name="idVozilo" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="predjenaKilometraza" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,36 +36,45 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "chat"
+    "idVozilo",
+    "predjenaKilometraza"
 })
-@XmlRootElement(name = "postChatRequest")
-public class PostChatRequest {
+@XmlRootElement(name = "updateVoziloRequset")
+public class UpdateVoziloRequset {
 
-    @XmlElement(required = true)
-    protected Chat chat;
+    protected long idVozilo;
+    protected double predjenaKilometraza;
 
     /**
-     * Gets the value of the chat property.
+     * Gets the value of the idVozilo property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Chat }
-     *     
      */
-    public Chat getChat() {
-        return chat;
+    public long getIdVozilo() {
+        return idVozilo;
     }
 
     /**
-     * Sets the value of the chat property.
+     * Sets the value of the idVozilo property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Chat }
-     *     
      */
-    public void setChat(Chat value) {
-        this.chat = value;
+    public void setIdVozilo(long value) {
+        this.idVozilo = value;
+    }
+
+    /**
+     * Gets the value of the predjenaKilometraza property.
+     * 
+     */
+    public double getPredjenaKilometraza() {
+        return predjenaKilometraza;
+    }
+
+    /**
+     * Sets the value of the predjenaKilometraza property.
+     * 
+     */
+    public void setPredjenaKilometraza(double value) {
+        this.predjenaKilometraza = value;
     }
 
 }

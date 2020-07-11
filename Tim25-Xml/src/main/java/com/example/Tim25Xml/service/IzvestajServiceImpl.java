@@ -1,17 +1,18 @@
 package com.example.Tim25Xml.service;
 
-import com.example.Tim25Xml.model.Chat;
+
 import com.example.Tim25Xml.model.Izvestaj;
 import com.example.Tim25Xml.model.Vozilo;
 import com.example.Tim25Xml.repository.IzvestajRepository;
 import com.example.Tim25Xml.repository.VoziloRepository;
 import com.example.Tim25Xml.soap.GetAgentClient;
-import com.example.Tim25Xml.soap.VoziloClient;
+import com.example.Tim25Xml.soap.UpdateVozilo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.Collection;
 
 @Service
@@ -25,13 +26,16 @@ public class IzvestajServiceImpl implements IzvestajService {
     private GetAgentClient getAgentClient;
 
     @Autowired
+    private UpdateVozilo updateVoziloClient;
+
+    @Autowired
     private VoziloService voziloService;
 
     @Autowired
     private VoziloRepository voziloRepository;
 
     @Override
-    public Izvestaj kreirajIzvestaj(Izvestaj izvestaj) {
+    public Izvestaj kreirajIzvestaj(Izvestaj izvestaj) throws DatatypeConfigurationException {
         Izvestaj ret = new Izvestaj();
         ret.setIdVozila(izvestaj.getIdVozila());
         ret.setPredjenaKilometraza(izvestaj.getPredjenaKilometraza());
@@ -51,7 +55,17 @@ public class IzvestajServiceImpl implements IzvestajService {
         v.setPredjenaKilometraza(v.getPredjenaKilometraza()+ret.getPredjenaKilometraza());
         voziloRepository.save(v);
 
+        sendToMicrosevice(v.getId(),v.getPredjenaKilometraza());
+
         return ret;
+    }
+
+    private void sendToMicrosevice(Long id, double predjenaKilometraza) throws DatatypeConfigurationException {
+        if (updateVoziloClient.updateVoziloResponse(id,predjenaKilometraza) == null) {
+            logger.info("***ERROR VoziloService > sendToMicroServices > voziloClient > returned NULL!");
+        } else {
+            logger.info("***VoziloService > sendToMicroServices > voziloClient > uspesno poslat vozilo!");
+        }
     }
 
     @Override

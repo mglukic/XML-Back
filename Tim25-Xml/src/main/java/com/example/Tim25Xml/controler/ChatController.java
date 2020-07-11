@@ -3,6 +3,7 @@ package com.example.Tim25Xml.controler;
 import com.example.Tim25Xml.model.Chat;
 import com.example.Tim25Xml.model.Message;
 import com.example.Tim25Xml.service.ChatService;
+import com.example.Tim25Xml.soap.GetAgentClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,11 @@ public class ChatController {
 
     @Autowired
     ChatService chatService;
+
+    @Autowired
+    private GetAgentClient getAgentClient;
+
+    private String mailAgenta=null;
 
     @GetMapping(value = "/autor/{email}")
     public Collection<Chat> vratiChatovePoKorisniku(@PathVariable("email") String email) {
@@ -56,6 +62,12 @@ public class ChatController {
         return chatService.kreirajCet(idPodnosilac);
     }
 
+    @GetMapping(value = "/ulogovan")
+    public String vratiAgenta() {
 
+       mailAgenta=getAgentClient.getMailUlogovanogAgentaResponse().getVraceniMejl();
+
+        return mailAgenta;
+    }
 
 }
